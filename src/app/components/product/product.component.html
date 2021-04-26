@@ -1,0 +1,11 @@
+<h3>Search Products</h3>
+<form [formGroup]="productForm">
+    ID: <input formControlName="productId">
+</form>
+<br/>
+<div *ngIf="product">
+    Id: {{product.id}}, Name: {{product.name}}, Category: {{product.category}}
+</div>
+
+
+<button (click)="test()">test</button>
