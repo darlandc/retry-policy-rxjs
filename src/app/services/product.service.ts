@@ -8,6 +8,8 @@ import { catchError, retry, tap} from 'rxjs/operators';
     providedIn: 'root'
 })
 export class ProductService {
+    mockError500 = 'https://run.mocky.io/v3/48654a89-e0ee-42e8-95c4-55433d7ee5f6';
+    // https://run.mocky.io/v3/48654a89-e0ee-42e8-95c4-55433d7ee5f6
     productsUrl = "/api/products";
     error500 = {
       status: 500,
@@ -40,5 +42,9 @@ export class ProductService {
 
     getData(status: number) {
       return throwError({status});
+    }
+
+    getError500(): Observable<any> {
+      return this.http.get('https://run.mocky.io/v3/48654a89-e0ee-42e8-95c4-55433d7ee5f6', {});
     }
 }
