@@ -25,13 +25,16 @@ export class ProductComponent implements OnInit {
     productId: this.productId
   });
   error = 'no error';
+  loading: boolean;
+  errorMessage: string;
+  userName: string;
+  repos: any;
 
   constructor(
     private productService: ProductService,
     private formBuilder: FormBuilder
   ) {}
   ngOnInit(): void {
-    //Total max 3 retry, but no success and throw error
     of(1, 2, 3, 4)
       .pipe(
         mergeMap(data => {
@@ -101,7 +104,7 @@ export class ProductComponent implements OnInit {
       );
   }
 
-  searchProduct() {
+  searchProduct(): void {
     this.productId.valueChanges
       .pipe(
         debounceTime(0),
@@ -145,4 +148,26 @@ export class ProductComponent implements OnInit {
       )
       .subscribe(res => console.log(res), err => console.log(err));
   }
+
+  public getRepos(): void {
+    this.loading = true;
+    this.errorMessage = '';
+    this.productService.getRepos(this.userName)
+      .subscribe(
+        (response) => {
+          // Next callback
+          console.log('response received');
+          this.repos = response;
+        },
+        (error) => {
+          // Error callback
+          console.error('error caught in component');
+          this.errorMessage = error;
+          this.loading = false;
+
+        }
+      );
+  }
+
+
 }
